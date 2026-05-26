@@ -1,5 +1,30 @@
 # React + TypeScript + Vite
 
+## Git workflow
+
+For this portfolio project, keep the main development branch stable and use a
+separate feature branch for each task.
+
+### Branches
+
+- `develop`: stable integration branch for reviewed work.
+- `feature/<task-name>`: one small task or learning exercise.
+
+### Before committing
+
+1. Run `git status` to confirm the current branch and changed files.
+2. Read the diff with `git diff`.
+3. Commit only one clear work unit with a descriptive message.
+
+### Before pushing
+
+1. Confirm the branch with `git branch --show-current`.
+2. Push the feature branch, not `develop`.
+3. Leave a short note with the branch, commit, and verification used.
+
+Small commits are easier to review, explain, and revert without removing
+unrelated work.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
