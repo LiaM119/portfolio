@@ -153,6 +153,26 @@ join skills s on s.id = pt.skill_id
 order by p.display_order, pt.display_order;
 ```
 
+## QA evidence
+
+Dashboard execution was verified after running `supabase/schema.sql` in the
+Supabase SQL Editor.
+
+| Check | Result |
+| --- | --- |
+| Supabase project created | Done |
+| Tables visible in Table Editor | `profile`, `skills`, `certifications`, `projects`, `project_tech` |
+| Seed data loaded | Done |
+| `project_tech` relationship query | Passed |
+
+Relationship query result:
+
+```text
+Personal Portfolio -> React -> display_order 1
+Personal Portfolio -> TypeScript -> display_order 2
+Supabase Practice Schema -> Supabase -> display_order 1
+```
+
 ## Learning question
 
 What table answers each section of the home?
