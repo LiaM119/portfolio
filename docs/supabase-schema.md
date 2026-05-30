@@ -34,6 +34,27 @@ update, or delete permissions from this schema.
 
 ## Text model before SQL
 
+React types must match the SQL column names exactly. `timestamptz` values arrive
+as strings from Supabase, and `date` values arrive as `YYYY-MM-DD` strings when
+present.
+
+## Required and nullable fields
+
+| Table | Required fields | Nullable fields |
+| --- | --- | --- |
+| `profile` | `id`, `full_name`, `role_title`, `headline`, `summary`, `created_at`, `updated_at` | `location`, `email`, `linkedin_url`, `github_url`, `avatar_url`, `resume_url` |
+| `skills` | `id`, `name`, `category`, `level_label`, `display_order`, `created_at`, `updated_at` | None |
+| `certifications` | `id`, `title`, `issuer`, `display_order`, `created_at`, `updated_at` | `issued_at`, `credential_url` |
+| `projects` | `id`, `title`, `summary`, `is_featured`, `display_order`, `created_at`, `updated_at` | `description`, `image_url`, `live_url`, `repo_url` |
+| `project_tech` | `project_id`, `skill_id`, `display_order`, `created_at`, `updated_at` | None |
+
+Ordering rules:
+
+- `skills`, `certifications`, and `projects` should be rendered by ascending `display_order`.
+- Project technology chips should be rendered by ascending `project_tech.display_order` inside each project.
+- All `display_order` values are non-negative integers. Use `0` only when an item has no intentional order yet.
+- The seed data uses explicit `display_order` values so React can render stable lists without sorting by names or creation time.
+
 ### `profile`
 
 Stores the single public profile shown in the hero/about sections.
@@ -168,8 +189,15 @@ Supabase SQL Editor.
 Relationship query result:
 
 ```text
-Personal Portfolio -> React -> display_order 1
-Personal Portfolio -> TypeScript -> display_order 2
+Organizer -> Angular -> display_order 1
+Organizer -> Java -> display_order 2
+Organizer -> Spring Boot -> display_order 3
+Organizer -> Spring Security -> display_order 4
+Organizer -> MySQL -> display_order 5
+Personal Portfolio -> TypeScript -> display_order 1
+Personal Portfolio -> HTML -> display_order 2
+Personal Portfolio -> CSS -> display_order 3
+Personal Portfolio -> Tailwind CSS -> display_order 4
 Supabase Practice Schema -> Supabase -> display_order 1
 ```
 

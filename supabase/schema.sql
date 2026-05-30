@@ -153,16 +153,16 @@ insert into public.profile (
   resume_url
 ) values (
   '00000000-0000-0000-0000-000000000001',
-  'Liam',
-  'Frontend Developer',
-  'Building clean, responsive web experiences.',
-  'Portfolio focused on React, TypeScript, and practical project delivery.',
-  'Argentina',
-  'liam@example.com',
-  'https://www.linkedin.com/in/example',
+  'Liameromero',
+  'Software Developer',
+  'Full Stack Angular & Spring Boot',
+  'Desarrollador de software especializado en aplicaciones web Full Stack con Angular, Spring Boot y MySQL. Tecnico Superior en Programacion por la Universidad Tecnologica Nacional.',
+  'Mar del Plata, Buenos Aires, Argentina',
+  'liamnahuelromero.t@gmail.com',
+  'https://www.linkedin.com/in/liamromero',
   'https://github.com/LiaM119',
-  'https://example.com/avatar.jpg',
-  'https://example.com/resume.pdf'
+  null,
+  null
 ) on conflict (id) do update set
   full_name = excluded.full_name,
   role_title = excluded.role_title,
@@ -176,9 +176,19 @@ insert into public.profile (
   resume_url = excluded.resume_url;
 
 insert into public.skills (id, name, category, level_label, display_order) values
-  ('10000000-0000-0000-0000-000000000001', 'React', 'frontend', 'Comfortable', 1),
-  ('10000000-0000-0000-0000-000000000002', 'TypeScript', 'frontend', 'Learning by building', 2),
-  ('10000000-0000-0000-0000-000000000003', 'Supabase', 'backend', 'Learning', 3)
+  ('10000000-0000-0000-0000-000000000001', 'Angular', 'frontend', 'Project experience', 1),
+  ('10000000-0000-0000-0000-000000000002', 'TypeScript', 'frontend', 'Project experience', 2),
+  ('10000000-0000-0000-0000-000000000003', 'HTML', 'frontend', 'Project experience', 3),
+  ('10000000-0000-0000-0000-000000000004', 'CSS', 'frontend', 'Project experience', 4),
+  ('10000000-0000-0000-0000-000000000005', 'Java', 'backend', 'Project experience', 5),
+  ('10000000-0000-0000-0000-000000000006', 'Spring', 'backend', 'Project experience', 6),
+  ('10000000-0000-0000-0000-000000000007', 'Spring Boot', 'backend', 'Project experience', 7),
+  ('10000000-0000-0000-0000-000000000008', 'Spring Security', 'backend', 'Project experience', 8),
+  ('10000000-0000-0000-0000-000000000009', 'MySQL', 'database', 'Project experience', 9),
+  ('10000000-0000-0000-0000-000000000010', 'Git', 'tools', 'Project experience', 10),
+  ('10000000-0000-0000-0000-000000000011', 'Tailwind CSS', 'frontend', 'Project experience', 11),
+  ('10000000-0000-0000-0000-000000000012', 'Postman', 'tools', 'Project experience', 12),
+  ('10000000-0000-0000-0000-000000000013', 'Supabase', 'backend', 'Learning', 13)
 on conflict (id) do update set
   name = excluded.name,
   category = excluded.category,
@@ -186,8 +196,12 @@ on conflict (id) do update set
   display_order = excluded.display_order;
 
 insert into public.certifications (id, title, issuer, issued_at, credential_url, display_order) values
-  ('20000000-0000-0000-0000-000000000001', 'Responsive Web Design', 'freeCodeCamp', '2025-01-15', 'https://example.com/certifications/responsive-web-design', 1),
-  ('20000000-0000-0000-0000-000000000002', 'JavaScript Algorithms and Data Structures', 'freeCodeCamp', null, 'https://example.com/certifications/javascript', 2)
+  ('20000000-0000-0000-0000-000000000001', 'Java Spring Framework', 'Issuer to confirm', null, null, 1),
+  ('20000000-0000-0000-0000-000000000002', 'Java Spring Security', 'Issuer to confirm', null, null, 2),
+  ('20000000-0000-0000-0000-000000000003', 'Java Spring Data JPA', 'Issuer to confirm', null, null, 3),
+  ('20000000-0000-0000-0000-000000000004', 'Java Spring', 'Issuer to confirm', null, null, 4),
+  ('20000000-0000-0000-0000-000000000005', 'Autenticacion con Angular', 'Issuer to confirm', null, null, 5),
+  ('20000000-0000-0000-0000-000000000006', 'Maquetacion Angular', 'Issuer to confirm', null, null, 6)
 on conflict (id) do update set
   title = excluded.title,
   issuer = excluded.issuer,
@@ -198,25 +212,36 @@ on conflict (id) do update set
 insert into public.projects (id, title, summary, description, image_url, live_url, repo_url, is_featured, display_order) values
   (
     '30000000-0000-0000-0000-000000000001',
-    'Personal Portfolio',
-    'Responsive portfolio built with React and TypeScript.',
-    'A personal site used to practice professional Git workflow, UI structure, and backend modeling.',
-    'https://example.com/projects/portfolio.jpg',
-    'https://example.com',
-    'https://github.com/LiaM119/portfolio',
+    'Organizer',
+    'Aplicacion de gestion y organizacion de tareas y notas.',
+    'Permite crear carpetas y notas personalizadas para organizarse de manera eficiente.',
+    null,
+    null,
+    null,
     true,
     1
   ),
   (
     '30000000-0000-0000-0000-000000000002',
-    'Supabase Practice Schema',
-    'Small backend model for editable portfolio content.',
-    'A learning project for understanding tables, primary keys, foreign keys, and many-to-many relationships.',
+    'Personal Portfolio',
+    'Responsive portfolio built with React, TypeScript, and Tailwind CSS.',
+    'Personal site used to practice professional Git workflow, UI structure, and Supabase-backed content modeling.',
     null,
     null,
     'https://github.com/LiaM119/portfolio',
     false,
     2
+  ),
+  (
+    '30000000-0000-0000-0000-000000000003',
+    'Supabase Practice Schema',
+    'Small backend model for editable portfolio content.',
+    'Learning project for tables, primary keys, foreign keys, public read policies, and many-to-many relationships.',
+    null,
+    null,
+    'https://github.com/LiaM119/portfolio',
+    false,
+    3
   )
 on conflict (id) do update set
   title = excluded.title,
@@ -228,10 +253,24 @@ on conflict (id) do update set
   is_featured = excluded.is_featured,
   display_order = excluded.display_order;
 
+delete from public.project_tech
+where project_id in (
+  '30000000-0000-0000-0000-000000000001',
+  '30000000-0000-0000-0000-000000000002',
+  '30000000-0000-0000-0000-000000000003'
+);
+
 insert into public.project_tech (project_id, skill_id, display_order) values
   ('30000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000001', 1),
-  ('30000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000002', 2),
-  ('30000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000003', 1)
+  ('30000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000005', 2),
+  ('30000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000007', 3),
+  ('30000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000008', 4),
+  ('30000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000009', 5),
+  ('30000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000002', 1),
+  ('30000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000003', 2),
+  ('30000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000004', 3),
+  ('30000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000011', 4),
+  ('30000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000013', 1)
 on conflict (project_id, skill_id) do update set
   display_order = excluded.display_order;
 
