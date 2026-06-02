@@ -1,4 +1,4 @@
-import { supabase } from './supabase'
+import { getSupabaseClient } from './supabase'
 import type { Certification, Profile, Project, ProjectTech, Skill } from '../types/supabase'
 
 export type ProjectWithTech = Project & {
@@ -25,6 +25,8 @@ function requireSupabaseData<T>(data: T | null, error: { message: string } | nul
 }
 
 export async function getHomeData(): Promise<HomeData> {
+  const supabase = getSupabaseClient()
+
   const [profileResult, skillsResult, certificationsResult, projectsResult, projectTechResult] = await Promise.all([
     supabase.from('profile').select('*').limit(1).maybeSingle(),
     supabase.from('skills').select('*').order('display_order', { ascending: true }),
