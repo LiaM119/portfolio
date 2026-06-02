@@ -1,11 +1,50 @@
+import { useEffect, useState } from 'react'
 import AboutSection from './components/home/AboutSection'
 import CertificationsSection from './components/home/CertificationsSection'
 import Hero from './components/home/Hero'
 import Navbar from './components/home/Navbar'
 import ProjectsSection from './components/home/ProjectsSection'
 import SkillsSection from './components/home/SkillsSection'
+import { supabase } from './lib/supabase'
+
+type SupabaseCheckStatus =
+  | { state: 'loading' }
+  | { state: 'success'; skillName: string }
+  | { state: 'error'; message: string }
 
 function App() {
+  const [supabaseCheck, setSupabaseCheck] = useState<SupabaseCheckStatus>({ state: 'loading' })
+
+  useEffect(() => {
+    let isCurrent = true
+
+    async function checkSupabaseConnection() {
+      const { data, error } = await supabase
+        .from('skills')
+        .select('name')
+        .eq('name', 'HTML')
+        .limit(1)
+        .single()
+
+      if (!isCurrent) {
+        return
+      }
+
+      if (error) {
+        setSupabaseCheck({ state: 'error', message: error.message })
+        return
+      }
+
+      setSupabaseCheck({ state: 'success', skillName: data.name })
+    }
+
+    checkSupabaseConnection()
+
+    return () => {
+      isCurrent = false
+    }
+  }, [])
+
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#0c0d0f] text-zinc-200">
       <div
@@ -28,6 +67,12 @@ function App() {
           <SkillsSection />
         </div>
       </main>
+
+      <div className="fixed bottom-4 right-4 rounded-full border border-white/10 bg-zinc-950/80 px-4 py-2 text-xs text-zinc-300 shadow-xl backdrop-blur">
+        {supabaseCheck.state === 'loading' && 'Checking Supabase...'}
+        {supabaseCheck.state === 'success' && `Supabase connected: ${supabaseCheck.skillName} skill read`}
+        {supabaseCheck.state === 'error' && `Supabase error: ${supabaseCheck.message}`}
+      </div>
     </div>
   )
 }

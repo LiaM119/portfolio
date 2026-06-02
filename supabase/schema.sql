@@ -84,6 +84,13 @@ alter table public.certifications enable row level security;
 alter table public.projects enable row level security;
 alter table public.project_tech enable row level security;
 
+grant usage on schema public to anon, authenticated;
+grant select on public.profile to anon, authenticated;
+grant select on public.skills to anon, authenticated;
+grant select on public.certifications to anon, authenticated;
+grant select on public.projects to anon, authenticated;
+grant select on public.project_tech to anon, authenticated;
+
 drop policy if exists "Public read profile" on public.profile;
 create policy "Public read profile"
 on public.profile for select
