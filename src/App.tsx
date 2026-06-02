@@ -9,7 +9,7 @@ import { supabase } from './lib/supabase'
 
 type SupabaseCheckStatus =
   | { state: 'loading' }
-  | { state: 'success'; count: number }
+  | { state: 'success'; skillName: string }
   | { state: 'error'; message: string }
 
 function App() {
@@ -19,7 +19,12 @@ function App() {
     let isCurrent = true
 
     async function checkSupabaseConnection() {
-      const { data, error } = await supabase.from('HTML').select('*').limit(5)
+      const { data, error } = await supabase
+        .from('skills')
+        .select('name')
+        .eq('name', 'HTML')
+        .limit(1)
+        .single()
 
       if (!isCurrent) {
         return
@@ -30,7 +35,7 @@ function App() {
         return
       }
 
-      setSupabaseCheck({ state: 'success', count: data.length })
+      setSupabaseCheck({ state: 'success', skillName: data.name })
     }
 
     checkSupabaseConnection()
@@ -65,7 +70,7 @@ function App() {
 
       <div className="fixed bottom-4 right-4 rounded-full border border-white/10 bg-zinc-950/80 px-4 py-2 text-xs text-zinc-300 shadow-xl backdrop-blur">
         {supabaseCheck.state === 'loading' && 'Checking Supabase...'}
-        {supabaseCheck.state === 'success' && `Supabase connected: ${supabaseCheck.count} HTML rows read`}
+        {supabaseCheck.state === 'success' && `Supabase connected: ${supabaseCheck.skillName} skill read`}
         {supabaseCheck.state === 'error' && `Supabase error: ${supabaseCheck.message}`}
       </div>
     </div>
