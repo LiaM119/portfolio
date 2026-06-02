@@ -5,40 +5,34 @@ import Hero from './components/home/Hero'
 import Navbar from './components/home/Navbar'
 import ProjectsSection from './components/home/ProjectsSection'
 import SkillsSection from './components/home/SkillsSection'
-import { supabase } from './lib/supabase'
+import { getHomeData, type HomeData } from './lib/portfolioData'
 
-type SupabaseCheckStatus =
+type HomeDataStatus =
   | { state: 'loading' }
-  | { state: 'success'; skillName: string }
+  | { state: 'success'; data: HomeData }
   | { state: 'error'; message: string }
 
 function App() {
-  const [supabaseCheck, setSupabaseCheck] = useState<SupabaseCheckStatus>({ state: 'loading' })
+  const [homeData, setHomeData] = useState<HomeDataStatus>({ state: 'loading' })
 
   useEffect(() => {
     let isCurrent = true
 
-    async function checkSupabaseConnection() {
-      const { data, error } = await supabase
-        .from('skills')
-        .select('name')
-        .eq('name', 'HTML')
-        .limit(1)
-        .single()
+    async function loadHomeData() {
+      try {
+        const data = await getHomeData()
 
-      if (!isCurrent) {
-        return
+        if (isCurrent) {
+          setHomeData({ state: 'success', data })
+        }
+      } catch (error) {
+        if (isCurrent) {
+          setHomeData({ state: 'error', message: error instanceof Error ? error.message : 'Could not load portfolio content' })
+        }
       }
-
-      if (error) {
-        setSupabaseCheck({ state: 'error', message: error.message })
-        return
-      }
-
-      setSupabaseCheck({ state: 'success', skillName: data.name })
     }
 
-    checkSupabaseConnection()
+    loadHomeData()
 
     return () => {
       isCurrent = false
@@ -54,25 +48,41 @@ function App() {
 
       <Navbar />
 
-      <main id="inicio">
-        <div className="mx-auto flex w-full max-w-6xl flex-col px-4 pb-12 sm:px-6 sm:pb-16 lg:px-8">
-          <Hero />
-          <ProjectsSection />
-        </div>
+      {homeData.state === 'loading' && (
+        <main id="inicio" className="mx-auto flex min-h-[70vh] w-full max-w-6xl items-center px-4 sm:px-6 lg:px-8">
+          <div className="w-full rounded-3xl border border-white/10 bg-white/[0.025] px-5 py-12 text-center shadow-2xl shadow-black/30 sm:px-8 sm:py-16">
+            <p className="text-xs uppercase tracking-[0.16em] text-zinc-500 sm:text-sm">Loading portfolio</p>
+            <h1 className="mt-4 text-3xl font-semibold text-zinc-100 sm:text-5xl">Preparing the latest content...</h1>
+            <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-zinc-300 sm:text-lg">Projects, skills, and certifications are loading from Supabase.</p>
+          </div>
+        </main>
+      )}
 
-        <AboutSection />
+      {homeData.state === 'error' && (
+        <main id="inicio" className="mx-auto flex min-h-[70vh] w-full max-w-6xl items-center px-4 sm:px-6 lg:px-8">
+          <div className="w-full rounded-3xl border border-red-400/20 bg-red-950/20 px-5 py-12 text-center shadow-2xl shadow-black/30 sm:px-8 sm:py-16">
+            <p className="text-xs uppercase tracking-[0.16em] text-red-300/80 sm:text-sm">Portfolio unavailable</p>
+            <h1 className="mt-4 text-3xl font-semibold text-zinc-100 sm:text-5xl">Content could not be loaded.</h1>
+            <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-zinc-300 sm:text-lg">{homeData.message}</p>
+          </div>
+        </main>
+      )}
 
-        <div className="mx-auto flex w-full max-w-6xl flex-col px-4 pb-12 sm:px-6 sm:pb-16 lg:px-8">
-          <CertificationsSection />
-          <SkillsSection />
-        </div>
-      </main>
+      {homeData.state === 'success' && (
+        <main id="inicio">
+          <div className="mx-auto flex w-full max-w-6xl flex-col px-4 pb-12 sm:px-6 sm:pb-16 lg:px-8">
+            <Hero profile={homeData.data.profile} skills={homeData.data.skills} />
+            <ProjectsSection projects={homeData.data.projects} />
+          </div>
 
-      <div className="fixed bottom-4 right-4 rounded-full border border-white/10 bg-zinc-950/80 px-4 py-2 text-xs text-zinc-300 shadow-xl backdrop-blur">
-        {supabaseCheck.state === 'loading' && 'Checking Supabase...'}
-        {supabaseCheck.state === 'success' && `Supabase connected: ${supabaseCheck.skillName} skill read`}
-        {supabaseCheck.state === 'error' && `Supabase error: ${supabaseCheck.message}`}
-      </div>
+          <AboutSection profile={homeData.data.profile} />
+
+          <div className="mx-auto flex w-full max-w-6xl flex-col px-4 pb-12 sm:px-6 sm:pb-16 lg:px-8">
+            <CertificationsSection certifications={homeData.data.certifications} />
+            <SkillsSection skills={homeData.data.skills} />
+          </div>
+        </main>
+      )}
     </div>
   )
 }
