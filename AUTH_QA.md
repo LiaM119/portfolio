@@ -40,23 +40,23 @@ Do not commit real passwords or private keys.
 
 - Action: manually open `/admin` in the browser.
 - Expected result: redirect to `/login` before admin content renders.
-- Obtained result: pending manual browser test with local env configured.
+- Obtained result: passed. Opening `/admin` without an active admin session redirects to `/login`.
 
 ### Case 2 — Admin session
 
 - Action: log in from `/login` with Liam's valid Supabase Auth email/password.
 - Expected result: redirect to `/admin` and show the admin page.
-- Obtained result: pending manual browser test with the real Supabase admin user.
+- Obtained result: passed. Liam can log in and sees the protected admin placeholder: "You are signed in with the allowed admin account."
 
 ### Case 3 — Post-logout
 
 - Action: click logout, then manually open `/admin` again.
 - Expected result: session is signed out and `/admin` redirects to `/login`.
-- Obtained result: pending manual browser test with local env configured.
+- Obtained result: passed. Logout redirects away from admin, and manually opening `/admin` after logout is blocked.
 
 ## Console and build
 
-- Critical console errors: pending manual browser check.
+- Critical console errors: no critical errors were reported during manual browser QA.
 - Build: passed with `npm run build` during review.
 - Secret/pattern scan: passed. The only `VITE_ADMIN_EMAIL=` match is the placeholder example in this document.
 
@@ -71,7 +71,5 @@ Do not commit real passwords or private keys.
 
 ## Remaining tasks
 
-- Create or confirm Liam's admin user in Supabase Auth.
-- Configure `VITE_ADMIN_EMAIL` in the local and deployment environments.
-- Run the three browser QA cases above.
-- Confirm the browser console has no critical errors during login, refresh, and logout.
+- Configure `VITE_ADMIN_EMAIL` in the deployment environment before deploying the admin route.
+- Keep Liam's Supabase Auth user active and aligned with `VITE_ADMIN_EMAIL`.
