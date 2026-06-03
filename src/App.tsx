@@ -5,14 +5,56 @@ import Hero from './components/home/Hero'
 import Navbar from './components/home/Navbar'
 import ProjectsSection from './components/home/ProjectsSection'
 import SkillsSection from './components/home/SkillsSection'
+import ProtectedRoute from './components/auth/ProtectedRoute'
 import { getHomeData, type HomeData } from './lib/portfolioData'
+import Admin from './pages/Admin'
+import Login from './pages/Login'
 
 type HomeDataStatus =
   | { state: 'loading' }
   | { state: 'success'; data: HomeData }
   | { state: 'error'; message: string }
 
+function normalizePath(pathname: string) {
+  return pathname === '/admin' || pathname === '/login' ? pathname : '/'
+}
+
+function navigateTo(path: string) {
+  window.history.pushState({}, '', path)
+  window.dispatchEvent(new PopStateEvent('popstate'))
+}
+
 function App() {
+  const [currentPath, setCurrentPath] = useState(() => normalizePath(window.location.pathname))
+
+  useEffect(() => {
+    function handleNavigation() {
+      setCurrentPath(normalizePath(window.location.pathname))
+    }
+
+    window.addEventListener('popstate', handleNavigation)
+
+    return () => {
+      window.removeEventListener('popstate', handleNavigation)
+    }
+  }, [])
+
+  if (currentPath === '/login') {
+    return <Login onNavigate={navigateTo} />
+  }
+
+  if (currentPath === '/admin') {
+    return (
+      <ProtectedRoute onNavigate={navigateTo}>
+        <Admin onNavigate={navigateTo} />
+      </ProtectedRoute>
+    )
+  }
+
+  return <Home />
+}
+
+function Home() {
   const [homeData, setHomeData] = useState<HomeDataStatus>({ state: 'loading' })
 
   useEffect(() => {
