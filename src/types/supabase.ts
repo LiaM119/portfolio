@@ -13,6 +13,7 @@ export type Profile = {
   github_url: string | null
   avatar_url: string | null
   resume_url: string | null
+  is_published: boolean
   created_at: Timestamp
   updated_at: Timestamp
 }
@@ -23,6 +24,7 @@ export type Skill = {
   category: string
   level_label: string
   display_order: number
+  is_published: boolean
   created_at: Timestamp
   updated_at: Timestamp
 }
@@ -34,6 +36,7 @@ export type Certification = {
   issued_at: DateString | null
   credential_url: string | null
   display_order: number
+  is_published: boolean
   created_at: Timestamp
   updated_at: Timestamp
 }
@@ -48,6 +51,7 @@ export type Project = {
   repo_url: string | null
   is_featured: boolean
   display_order: number
+  is_published: boolean
   created_at: Timestamp
   updated_at: Timestamp
 }

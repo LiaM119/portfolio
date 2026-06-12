@@ -28,10 +28,10 @@ export async function getHomeData(): Promise<HomeData> {
   const supabase = getSupabaseClient()
 
   const [profileResult, skillsResult, certificationsResult, projectsResult, projectTechResult] = await Promise.all([
-    supabase.from('profile').select('*').limit(1).maybeSingle(),
-    supabase.from('skills').select('*').order('display_order', { ascending: true }),
-    supabase.from('certifications').select('*').order('display_order', { ascending: true }),
-    supabase.from('projects').select('*').order('display_order', { ascending: true }),
+    supabase.from('profile').select('*').eq('is_published', true).limit(1).maybeSingle(),
+    supabase.from('skills').select('*').eq('is_published', true).order('display_order', { ascending: true }),
+    supabase.from('certifications').select('*').eq('is_published', true).order('display_order', { ascending: true }),
+    supabase.from('projects').select('*').eq('is_published', true).order('display_order', { ascending: true }),
     supabase.from('project_tech').select('*').order('display_order', { ascending: true }),
   ])
 
