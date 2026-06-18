@@ -114,7 +114,7 @@ export default function Login({ onNavigate }: LoginProps) {
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#0c0d0f] px-4 py-12 text-zinc-200">
       <section className="w-full max-w-md rounded-3xl border border-white/10 bg-white/[0.025] p-6 shadow-2xl shadow-black/30 sm:p-8">
-        <p className="text-xs uppercase tracking-[0.16em] text-zinc-500">Portfolio admin</p>
+        <p className="text-xs uppercase tracking-[0.16em] text-zinc-400">Portfolio admin</p>
         <h1 className="mt-3 text-3xl font-semibold text-zinc-100">Sign in</h1>
         <p className="mt-3 text-sm leading-6 text-zinc-300">Use the admin email and password configured in Supabase Auth.</p>
 
@@ -129,7 +129,7 @@ export default function Login({ onNavigate }: LoginProps) {
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 autoComplete="email"
-                className="mt-2 w-full rounded-2xl border border-white/10 bg-zinc-950 px-4 py-3 text-zinc-100 outline-none transition focus:border-zinc-300"
+                className="mt-2 w-full rounded-2xl border border-white/10 bg-zinc-950 px-4 py-3 text-zinc-100 outline-none transition focus-visible:border-zinc-300 focus-visible:ring-2 focus-visible:ring-zinc-400"
               />
             </label>
 
@@ -140,7 +140,7 @@ export default function Login({ onNavigate }: LoginProps) {
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 autoComplete="current-password"
-                className="mt-2 w-full rounded-2xl border border-white/10 bg-zinc-950 px-4 py-3 text-zinc-100 outline-none transition focus:border-zinc-300"
+                className="mt-2 w-full rounded-2xl border border-white/10 bg-zinc-950 px-4 py-3 text-zinc-100 outline-none transition focus-visible:border-zinc-300 focus-visible:ring-2 focus-visible:ring-zinc-400"
               />
             </label>
 
@@ -149,14 +149,14 @@ export default function Login({ onNavigate }: LoginProps) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full rounded-full bg-zinc-100 px-5 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
+              className="min-h-11 w-full rounded-full bg-zinc-100 px-5 py-3 text-sm font-semibold text-zinc-950 transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSubmitting ? 'Signing in...' : 'Sign in'}
             </button>
           </form>
         )}
 
-        <button type="button" onClick={() => onNavigate('/')} className="mt-6 text-sm text-zinc-400 transition hover:text-zinc-100">
+        <button type="button" onClick={() => onNavigate('/')} className="mt-6 inline-flex min-h-11 items-center rounded-full text-sm text-zinc-400 transition hover:text-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e]">
           Back to public portfolio
         </button>
       </section>

@@ -98,7 +98,7 @@ export default function ProtectedRoute({ children, onNavigate }: ProtectedRouteP
           <button
             type="button"
             onClick={() => onNavigate('/login')}
-            className="mt-6 rounded-full bg-zinc-100 px-5 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-white"
+            className="mt-6 min-h-11 rounded-full bg-zinc-100 px-5 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e]"
           >
             Back to login
           </button>

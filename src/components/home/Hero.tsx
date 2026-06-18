@@ -23,7 +23,7 @@ function Hero({ profile, skills }: HeroProps) {
             href={profile.linkedin_url}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-[#0A66C2] bg-[#0A66C2] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#0857a5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] sm:min-h-0 sm:min-w-36 sm:w-auto"
+            className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-[#0A66C2] bg-[#0A66C2] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#0857a5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] sm:min-w-36 sm:w-auto"
           >
             Linkedin -&gt;
           </a>
@@ -33,7 +33,7 @@ function Hero({ profile, skills }: HeroProps) {
             href={profile.github_url}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-white bg-white px-5 py-2.5 text-sm font-medium text-black transition hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] sm:min-h-0 sm:min-w-36 sm:w-auto"
+            className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-white bg-white px-5 py-2.5 text-sm font-medium text-black transition hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] sm:min-w-36 sm:w-auto"
           >
             Github -&gt;
           </a>
@@ -42,7 +42,7 @@ function Hero({ profile, skills }: HeroProps) {
           href={profile?.resume_url ?? emailHref}
           target={profile?.resume_url ? '_blank' : undefined}
           rel={profile?.resume_url ? 'noreferrer' : undefined}
-          className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-white/20 bg-white/10 px-5 py-2.5 text-sm font-medium text-zinc-100 transition hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] sm:min-h-0 sm:min-w-36 sm:w-auto"
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-white/20 bg-white/10 px-5 py-2.5 text-sm font-medium text-zinc-100 transition hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] sm:min-w-36 sm:w-auto"
         >
           {profile?.resume_url ? 'Descargar CV' : 'Contactar'}
         </a>

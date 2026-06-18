@@ -7,7 +7,7 @@ type SkillsSectionProps = {
 function SkillsSection({ skills }: SkillsSectionProps) {
   return (
     <section id="habilidades" className="pb-10 pt-6 sm:pb-12 sm:pt-8" aria-labelledby="skills-title">
-      <p className="text-xs uppercase tracking-[0.16em] text-zinc-500 sm:text-sm">Skills</p>
+      <p className="text-xs uppercase tracking-[0.16em] text-zinc-400 sm:text-sm">Skills</p>
       <h2 id="skills-title" className="sr-only">
         Skills
       </h2>

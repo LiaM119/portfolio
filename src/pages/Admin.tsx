@@ -54,10 +54,10 @@ const emptyCertification: CertificationInput = {
   is_published: true,
 }
 
-const fieldClass = 'mt-2 w-full rounded-xl border border-white/10 bg-zinc-950/80 px-3 py-2 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-600 focus:border-zinc-400'
+const fieldClass = 'mt-2 w-full rounded-xl border border-white/10 bg-zinc-950/80 px-3 py-2 text-sm text-zinc-100 outline-none transition placeholder:text-zinc-600 focus-visible:border-zinc-400 focus-visible:ring-2 focus-visible:ring-zinc-400'
 const labelClass = 'text-sm font-medium text-zinc-300'
 const panelClass = 'rounded-3xl border border-white/10 bg-white/[0.025] p-5 shadow-2xl shadow-black/20 sm:p-6'
-const secondaryButtonClass = 'rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-zinc-200 transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60'
+const secondaryButtonClass = 'inline-flex min-h-11 items-center rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-zinc-200 transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] disabled:cursor-not-allowed disabled:opacity-60'
 
 function toFormString(value: string | null) {
   return value ?? ''
@@ -337,10 +337,10 @@ export default function Admin({ onNavigate }: AdminProps) {
           <section className={panelClass} aria-labelledby="profile-editor-title">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.16em] text-zinc-500">Profile</p>
+                <p className="text-xs uppercase tracking-[0.16em] text-zinc-400">Profile</p>
                 <h2 id="profile-editor-title" className="mt-2 text-2xl font-semibold text-zinc-100">Main public identity</h2>
               </div>
-              <p className="text-sm text-zinc-500">Required fields are marked by the browser validation.</p>
+              <p className="text-sm text-zinc-400">Required fields are marked by the browser validation.</p>
             </div>
 
             <form className="mt-6 grid gap-4" onSubmit={handleProfileSubmit}>
@@ -398,7 +398,7 @@ export default function Admin({ onNavigate }: AdminProps) {
               </label>
 
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <button className="rounded-full bg-zinc-100 px-5 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60" disabled={profileStatus.state === 'saving'}>
+                <button className="min-h-11 rounded-full bg-zinc-100 px-5 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] disabled:cursor-not-allowed disabled:opacity-60" disabled={profileStatus.state === 'saving'}>
                   {profileStatus.state === 'saving' ? 'Saving...' : 'Save profile'}
                 </button>
                 {showSaveState(profileStatus)}
@@ -434,7 +434,7 @@ export default function Admin({ onNavigate }: AdminProps) {
                   </label>
                 </div>
                 <div className="flex flex-wrap gap-3">
-                  <button className="rounded-full bg-zinc-100 px-5 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60" disabled={skillStatus.state === 'saving'}>
+                  <button className="min-h-11 rounded-full bg-zinc-100 px-5 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] disabled:cursor-not-allowed disabled:opacity-60" disabled={skillStatus.state === 'saving'}>
                     {editingSkillId ? 'Update skill' : 'Add skill'}
                   </button>
                   {editingSkillId && (
@@ -493,7 +493,7 @@ export default function Admin({ onNavigate }: AdminProps) {
                   Published
                 </label>
                 <div className="flex flex-wrap gap-3">
-                  <button className="rounded-full bg-zinc-100 px-5 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60" disabled={certificationStatus.state === 'saving'}>
+                  <button className="min-h-11 rounded-full bg-zinc-100 px-5 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] disabled:cursor-not-allowed disabled:opacity-60" disabled={certificationStatus.state === 'saving'}>
                     {editingCertificationId ? 'Update certification' : 'Add certification'}
                   </button>
                   {editingCertificationId && (
@@ -533,7 +533,7 @@ function CollectionEditor({ title, description, status, children }: { title: str
   return (
     <section className={`${panelClass} flex flex-col gap-5`} aria-labelledby={`${title.toLowerCase()}-editor-title`}>
       <div>
-        <p className="text-xs uppercase tracking-[0.16em] text-zinc-500">Collection</p>
+        <p className="text-xs uppercase tracking-[0.16em] text-zinc-400">Collection</p>
         <h2 id={`${title.toLowerCase()}-editor-title`} className="mt-2 text-2xl font-semibold text-zinc-100">{title}</h2>
         <p className="mt-2 text-sm leading-6 text-zinc-400">{description}</p>
       </div>
@@ -548,7 +548,7 @@ function EditableList({ emptyMessage, children }: { emptyMessage: string; childr
   const items = Array.isArray(children) ? children.filter(Boolean) : children
 
   if (Array.isArray(items) && items.length === 0) {
-    return <p className="rounded-2xl border border-dashed border-white/10 px-4 py-6 text-sm text-zinc-500">{emptyMessage}</p>
+    return <p className="rounded-2xl border border-dashed border-white/10 px-4 py-6 text-sm text-zinc-400">{emptyMessage}</p>
   }
 
   return <ul className="grid gap-3">{children}</ul>

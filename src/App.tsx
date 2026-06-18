@@ -93,7 +93,7 @@ function Home() {
       {homeData.state === 'loading' && (
         <main id="inicio" className="mx-auto flex min-h-[70vh] w-full max-w-6xl items-center px-4 sm:px-6 lg:px-8">
           <div className="w-full rounded-3xl border border-white/10 bg-white/[0.025] px-5 py-12 text-center shadow-2xl shadow-black/30 sm:px-8 sm:py-16">
-            <p className="text-xs uppercase tracking-[0.16em] text-zinc-500 sm:text-sm">Loading portfolio</p>
+            <p className="text-xs uppercase tracking-[0.16em] text-zinc-400 sm:text-sm">Loading portfolio</p>
             <h1 className="mt-4 text-3xl font-semibold text-zinc-100 sm:text-5xl">Preparing the latest content...</h1>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-zinc-300 sm:text-lg">Projects, skills, and certifications are loading from Supabase.</p>
           </div>
