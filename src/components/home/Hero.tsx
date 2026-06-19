@@ -7,7 +7,6 @@ type HeroProps = {
 
 function Hero({ profile, skills }: HeroProps) {
   const techStack = skills.slice(0, 8)
-  const emailHref = profile?.email ? `mailto:${profile.email}` : '#sobre-mi'
 
   return (
     <section className="px-1 pb-12 pt-12 text-center sm:px-2 sm:pb-16 sm:pt-16 md:pb-20 md:pt-20" aria-labelledby="hero-title">
@@ -38,14 +37,16 @@ function Hero({ profile, skills }: HeroProps) {
             Github -&gt;
           </a>
         )}
-        <a
-          href={profile?.resume_url ?? emailHref}
-          target={profile?.resume_url ? '_blank' : undefined}
-          rel={profile?.resume_url ? 'noreferrer' : undefined}
-          className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-white/20 bg-white/10 px-5 py-2.5 text-sm font-medium text-zinc-100 transition hover:bg-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] sm:min-w-36 sm:w-auto"
-        >
-          {profile?.resume_url ? 'Descargar CV' : 'Contactar'}
-        </a>
+        {profile?.resume_url && (
+          <a
+            href={profile.resume_url}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-white/20 bg-transparent px-5 py-2.5 text-sm font-medium text-zinc-100 transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] sm:min-w-36 sm:w-auto"
+          >
+            Descargar CV
+          </a>
+        )}
       </div>
 
       <ul className="mx-auto mt-8 flex max-w-2xl flex-wrap justify-center gap-x-3 gap-y-2 sm:mt-9 sm:gap-x-4 sm:gap-y-3" aria-label="Tecnologias principales">

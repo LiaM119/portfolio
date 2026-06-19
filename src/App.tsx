@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import AboutSection from './components/home/AboutSection'
 import CertificationsSection from './components/home/CertificationsSection'
+import Footer from './components/home/Footer'
 import Hero from './components/home/Hero'
 import Navbar from './components/home/Navbar'
 import ProjectsSection from './components/home/ProjectsSection'
@@ -125,6 +126,8 @@ function Home() {
           </div>
         </main>
       )}
+
+      {homeData.state === 'success' && <Footer profile={homeData.data.profile} />}
     </div>
   )
 }
