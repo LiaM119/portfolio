@@ -7,14 +7,18 @@ type HeroProps = {
 
 function Hero({ profile, skills }: HeroProps) {
   const techStack = skills.slice(0, 8)
+  const title = profile ? profile.role_title : 'Portfolio'
+  const name = profile ? profile.full_name : 'Content not published yet'
+  const headline = profile ? profile.headline : 'Profile details will appear here when published.'
+  const resumeUrl = profile?.resume_url ?? '/cv-liam-romero.pdf'
 
   return (
     <section className="px-1 pb-12 pt-12 text-center sm:px-2 sm:pb-16 sm:pt-16 md:pb-20 md:pt-20" aria-labelledby="hero-title">
       <h1 id="hero-title" className="text-balance text-4xl font-semibold leading-tight text-zinc-100 sm:text-5xl md:text-6xl lg:text-7xl">
-        {profile?.role_title ?? 'Software Developer'}
-        <span className="mt-2 block sm:mt-3">{profile?.full_name ?? 'Liameromero'}</span>
+        {title}
+        <span className="mt-2 block sm:mt-3">{name}</span>
       </h1>
-      <p className="mx-auto mt-5 max-w-2xl text-base text-zinc-300 sm:mt-6 sm:text-lg lg:text-xl">{profile?.headline ?? 'Full Stack Angular & Spring Boot'}</p>
+      <p className="mx-auto mt-5 max-w-2xl text-base text-zinc-300 sm:mt-6 sm:text-lg lg:text-xl">{headline}</p>
 
       <div className="mx-auto mt-7 flex max-w-sm flex-col justify-center gap-3 sm:mt-8 sm:max-w-none sm:flex-row sm:flex-wrap" aria-label="Acciones principales">
         {profile?.linkedin_url && (
@@ -37,16 +41,14 @@ function Hero({ profile, skills }: HeroProps) {
             Github -&gt;
           </a>
         )}
-        {profile?.resume_url && (
-          <a
-            href={profile.resume_url}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-white/20 bg-transparent px-5 py-2.5 text-sm font-medium text-zinc-100 transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] sm:min-w-36 sm:w-auto"
-          >
-            Descargar CV
-          </a>
-        )}
+        <a
+          href={resumeUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-white/20 bg-transparent px-5 py-2.5 text-sm font-medium text-zinc-100 transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] sm:min-w-36 sm:w-auto"
+        >
+          Descargar CV
+        </a>
       </div>
 
       <ul className="mx-auto mt-8 flex max-w-2xl flex-wrap justify-center gap-x-3 gap-y-2 sm:mt-9 sm:gap-x-4 sm:gap-y-3" aria-label="Tecnologias principales">

@@ -1,3 +1,5 @@
+import type { Profile } from '../../types/supabase'
+
 const navLinks = [
   { label: 'Inicio', href: '#inicio' },
   { label: 'Proyectos', href: '#proyectos' },
@@ -6,17 +8,31 @@ const navLinks = [
   { label: 'Skills', href: '#habilidades' },
 ]
 
-function Navbar() {
+type NavbarProps = {
+  profile: Profile | null
+}
+
+function Navbar({ profile }: NavbarProps) {
+  const displayName = profile?.full_name ?? 'Portfolio'
+  const displayRole = profile?.role_title ?? 'Content managed in Supabase'
+  const initials = displayName
+    .split(' ')
+    .filter(Boolean)
+    .map((part) => part[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase() || 'P'
+
   return (
     <header className="mx-auto w-full max-w-6xl px-3 pt-3 sm:px-6 sm:pt-6 lg:px-8">
       <div className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.025] px-3 py-3 backdrop-blur sm:px-4 md:flex-row md:items-center md:justify-between">
         <a href="#inicio" className="inline-flex min-h-11 min-w-0 items-center gap-3 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e]" aria-label="Ir al inicio">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/25 text-base font-semibold text-zinc-100 sm:h-10 sm:w-10 sm:text-lg">
-            L
+            {initials}
           </span>
           <span className="min-w-0">
-            <strong className="block truncate text-base text-zinc-100">Liameromero</strong>
-            <span className="block text-xs text-zinc-400">Software Developer</span>
+            <strong className="block truncate text-base text-zinc-100">{displayName}</strong>
+            <span className="block text-xs text-zinc-400">{displayRole}</span>
           </span>
         </a>
 

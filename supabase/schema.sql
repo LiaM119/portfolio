@@ -25,6 +25,7 @@ create table if not exists public.profile (
   github_url text,
   avatar_url text,
   resume_url text,
+  is_published boolean not null default true,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   constraint profile_single_row check (id = '00000000-0000-0000-0000-000000000001'::uuid)
@@ -34,8 +35,9 @@ create table if not exists public.skills (
   id uuid primary key default gen_random_uuid(),
   name text not null unique,
   category text not null,
-  level_label text not null,
+  level_label text,
   display_order integer not null default 0,
+  is_published boolean not null default true,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   constraint skills_display_order_non_negative check (display_order >= 0)
@@ -48,6 +50,7 @@ create table if not exists public.certifications (
   issued_at date,
   credential_url text,
   display_order integer not null default 0,
+  is_published boolean not null default true,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   constraint certifications_display_order_non_negative check (display_order >= 0)
@@ -63,6 +66,7 @@ create table if not exists public.projects (
   repo_url text,
   is_featured boolean not null default false,
   display_order integer not null default 0,
+  is_published boolean not null default true,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   constraint projects_display_order_non_negative check (display_order >= 0)
@@ -169,7 +173,7 @@ insert into public.profile (
   'https://www.linkedin.com/in/liamromero',
   'https://github.com/LiaM119',
   null,
-  null
+  '/cv-liam-romero.pdf'
 ) on conflict (id) do update set
   full_name = excluded.full_name,
   role_title = excluded.role_title,

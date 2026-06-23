@@ -89,7 +89,7 @@ function Home() {
         aria-hidden="true"
       />
 
-      <Navbar />
+      <Navbar profile={homeData.state === 'success' ? homeData.data.profile : null} />
 
       {homeData.state === 'loading' && (
         <main id="inicio" className="mx-auto flex min-h-[70vh] w-full max-w-6xl items-center px-4 sm:px-6 lg:px-8">

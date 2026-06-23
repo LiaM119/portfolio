@@ -5,7 +5,7 @@ type FooterProps = {
 }
 
 function Footer({ profile }: FooterProps) {
-  const displayName = profile?.full_name ?? 'Liameromero'
+  const displayName = profile?.full_name ?? 'Portfolio'
 
   return (
     <footer className="border-t border-white/5 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-6 text-sm text-zinc-400" aria-label="Pie de pagina">

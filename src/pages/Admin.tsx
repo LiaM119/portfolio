@@ -82,8 +82,8 @@ function validateProfile(profile: ProfileInput) {
 }
 
 function validateSkill(skill: SkillInput) {
-  if (!skill.name.trim() || !skill.category.trim() || !skill.level_label.trim()) {
-    return 'Skill name, category, and level are required.'
+  if (!skill.name.trim() || !skill.category.trim()) {
+    return 'Skill name and category are required.'
   }
 
   if (skill.display_order < 0) {
@@ -245,6 +245,12 @@ export default function Admin({ onNavigate }: AdminProps) {
   }
 
   async function handleDeleteSkill(id: string) {
+    const skill = skills.find((item) => item.id === id)
+
+    if (!window.confirm(`Delete ${skill?.name ?? 'this skill'}? This cannot be undone.`)) {
+      return
+    }
+
     setSkillStatus({ state: 'saving', message: 'Deleting skill...' })
 
     try {
@@ -286,6 +292,12 @@ export default function Admin({ onNavigate }: AdminProps) {
   }
 
   async function handleDeleteCertification(id: string) {
+    const certification = certifications.find((item) => item.id === id)
+
+    if (!window.confirm(`Delete ${certification?.title ?? 'this certification'}? This cannot be undone.`)) {
+      return
+    }
+
     setCertificationStatus({ state: 'saving', message: 'Deleting certification...' })
 
     try {
@@ -306,7 +318,7 @@ export default function Admin({ onNavigate }: AdminProps) {
     setSkillForm({
       name: skill.name,
       category: skill.category,
-      level_label: skill.level_label,
+      level_label: toFormString(skill.level_label),
       display_order: skill.display_order,
       is_published: skill.is_published,
     })
@@ -388,7 +400,7 @@ export default function Admin({ onNavigate }: AdminProps) {
                 </label>
                 <label className={labelClass}>
                   Resume URL
-                  <input className={fieldClass} type="url" value={toFormString(profile.resume_url)} onChange={(event) => setProfile({ ...profile, resume_url: event.target.value })} />
+                  <input className={fieldClass} type="text" value={toFormString(profile.resume_url)} onChange={(event) => setProfile({ ...profile, resume_url: event.target.value })} placeholder="/cv-liam-romero.pdf or https://..." />
                 </label>
               </div>
 
@@ -420,7 +432,7 @@ export default function Admin({ onNavigate }: AdminProps) {
                   </label>
                   <label className={labelClass}>
                     Level label
-                    <input className={fieldClass} value={skillForm.level_label} onChange={(event) => setSkillForm({ ...skillForm, level_label: event.target.value })} required />
+                    <input className={fieldClass} value={toFormString(skillForm.level_label)} onChange={(event) => setSkillForm({ ...skillForm, level_label: event.target.value })} />
                   </label>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
@@ -451,7 +463,7 @@ export default function Admin({ onNavigate }: AdminProps) {
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                       <div>
                         <h4 className="font-semibold text-zinc-100">{skill.name}</h4>
-                        <p className="mt-1 text-sm text-zinc-400">{skill.category} - {skill.level_label} - order {skill.display_order}</p>
+                        <p className="mt-1 text-sm text-zinc-400">{[skill.category, skill.level_label, `order ${skill.display_order}`].filter(Boolean).join(' - ')}</p>
                         {!skill.is_published && <p className="mt-2 text-xs uppercase tracking-[0.16em] text-amber-300">Draft</p>}
                       </div>
                       <div className="flex gap-2">

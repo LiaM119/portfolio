@@ -55,10 +55,32 @@ export function normalizeSkillInput(input: SkillInput): SkillInput {
   return {
     name: input.name.trim(),
     category: input.category.trim(),
-    level_label: input.level_label.trim(),
+    level_label: input.level_label ? normalizeOptional(input.level_label) : null,
     display_order: Number.isFinite(input.display_order) ? input.display_order : 0,
     is_published: input.is_published,
   }
+}
+
+function formatLinkedProjectError(data: unknown) {
+  const linkedProjects = Array.isArray(data) ? data : []
+  const projectNames = linkedProjects
+    .map((item) => {
+      if (!item || typeof item !== 'object') {
+        return null
+      }
+
+      const project = 'projects' in item ? item.projects : null
+
+      if (!project || typeof project !== 'object' || !('title' in project) || typeof project.title !== 'string') {
+        return null
+      }
+
+      return project.title
+    })
+    .filter((name): name is string => Boolean(name))
+
+  const suffix = projectNames.length > 0 ? ` Linked projects: ${projectNames.join(', ')}.` : ''
+  return `This skill is used by one or more projects. Remove it from those project tech lists before deleting it.${suffix}`
 }
 
 export function normalizeCertificationInput(input: CertificationInput): CertificationInput {
@@ -120,10 +142,23 @@ export async function updateSkill(id: string, input: SkillInput): Promise<Skill>
 
 export async function deleteSkill(id: string): Promise<void> {
   const supabase = getSupabaseClient()
+  const linkedProjectsResult = await supabase
+    .from('project_tech')
+    .select('project_id, projects(title)')
+    .eq('skill_id', id)
+
+  if (linkedProjectsResult.error) {
+    throw new Error(linkedProjectsResult.error.message)
+  }
+
+  if (linkedProjectsResult.data && linkedProjectsResult.data.length > 0) {
+    throw new Error(formatLinkedProjectError(linkedProjectsResult.data))
+  }
+
   const { error } = await supabase.from('skills').delete().eq('id', id)
 
   if (error) {
-    throw new Error(error.message)
+    throw new Error(error.code === '23503' ? formatLinkedProjectError([]) : error.message)
   }
 }
 
