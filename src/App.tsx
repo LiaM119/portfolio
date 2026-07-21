@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import AboutSection from './components/home/AboutSection'
 import CertificationsSection from './components/home/CertificationsSection'
+import Footer from './components/home/Footer'
 import Hero from './components/home/Hero'
 import Navbar from './components/home/Navbar'
 import ProjectsSection from './components/home/ProjectsSection'
 import SkillsSection from './components/home/SkillsSection'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import { getHomeData, type HomeData } from './lib/portfolioData'
+import useScrollReveal from './hooks/useScrollReveal'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
 
@@ -57,6 +59,8 @@ function App() {
 function Home() {
   const [homeData, setHomeData] = useState<HomeDataStatus>({ state: 'loading' })
 
+  useScrollReveal(homeData.state === 'success')
+
   useEffect(() => {
     let isCurrent = true
 
@@ -82,18 +86,18 @@ function Home() {
   }, [])
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#0c0d0f] text-zinc-200">
+    <div className="relative min-h-screen overflow-x-hidden bg-[#0c0d0f] pt-40 text-zinc-200 sm:pt-44 md:pt-28">
       <div
         className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(1200px_680px_at_55%_-8%,rgba(245,245,245,0.05),transparent_68%),repeating-linear-gradient(90deg,rgba(255,255,255,0.018)_0px,rgba(255,255,255,0.018)_40px,transparent_40px,transparent_92px),linear-gradient(180deg,#0b0c0e_0%,#090a0c_100%)]"
         aria-hidden="true"
       />
 
-      <Navbar />
+      <Navbar profile={homeData.state === 'success' ? homeData.data.profile : null} />
 
       {homeData.state === 'loading' && (
         <main id="inicio" className="mx-auto flex min-h-[70vh] w-full max-w-6xl items-center px-4 sm:px-6 lg:px-8">
           <div className="w-full rounded-3xl border border-white/10 bg-white/[0.025] px-5 py-12 text-center shadow-2xl shadow-black/30 sm:px-8 sm:py-16">
-            <p className="text-xs uppercase tracking-[0.16em] text-zinc-500 sm:text-sm">Loading portfolio</p>
+            <p className="text-xs uppercase tracking-[0.16em] text-zinc-400 sm:text-sm">Loading portfolio</p>
             <h1 className="mt-4 text-3xl font-semibold text-zinc-100 sm:text-5xl">Preparing the latest content...</h1>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-zinc-300 sm:text-lg">Projects, skills, and certifications are loading from Supabase.</p>
           </div>
@@ -125,6 +129,8 @@ function Home() {
           </div>
         </main>
       )}
+
+      {homeData.state === 'success' && <Footer profile={homeData.data.profile} />}
     </div>
   )
 }

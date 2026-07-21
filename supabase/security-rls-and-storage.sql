@@ -22,6 +22,9 @@ alter table public.profile
 alter table public.skills
   add column if not exists is_published boolean not null default true;
 
+alter table public.skills
+  alter column level_label drop not null;
+
 alter table public.certifications
   add column if not exists is_published boolean not null default true;
 

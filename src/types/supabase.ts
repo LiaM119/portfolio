@@ -22,7 +22,7 @@ export type Skill = {
   id: string
   name: string
   category: string
-  level_label: string
+  level_label: string | null
   display_order: number
   is_published: boolean
   created_at: Timestamp

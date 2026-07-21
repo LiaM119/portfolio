@@ -14,7 +14,7 @@ export default function AdminLayout({ children, errorMessage, isSigningOut, onLo
         <section className="rounded-3xl border border-white/10 bg-white/[0.025] p-6 shadow-2xl shadow-black/30 sm:p-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="text-xs uppercase tracking-[0.16em] text-zinc-500">Admin area</p>
+              <p className="text-xs uppercase tracking-[0.16em] text-zinc-400">Admin area</p>
               <h1 className="mt-3 text-3xl font-semibold text-zinc-100">Portfolio admin</h1>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-300">Edit the content used by the public portfolio. Keep it simple, save small changes, then check the home page.</p>
             </div>
@@ -23,7 +23,7 @@ export default function AdminLayout({ children, errorMessage, isSigningOut, onLo
               type="button"
               onClick={onLogout}
               disabled={isSigningOut}
-              className="rounded-full bg-zinc-100 px-5 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
+              className="min-h-11 rounded-full bg-zinc-100 px-5 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSigningOut ? 'Signing out...' : 'Logout'}
             </button>

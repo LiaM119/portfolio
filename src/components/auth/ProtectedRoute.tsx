@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react'
+import type { Session } from '@supabase/supabase-js'
 import { getSupabaseClient } from '../../lib/supabase'
 
 type ProtectedRouteProps = {
@@ -20,25 +21,19 @@ export default function ProtectedRoute({ children, onNavigate }: ProtectedRouteP
 
   useEffect(() => {
     let isCurrent = true
+    let isBlockingInvalidSession = false
+    const supabase = getSupabaseClient()
 
-    async function checkSession() {
+    async function authorizeSession(session: Session | null) {
       try {
-        const supabase = getSupabaseClient()
-        const { data, error } = await supabase.auth.getSession()
-
         if (!isCurrent) {
           return
         }
 
-        if (error) {
-          setAccessState({ status: 'blocked', message: 'We could not check your session. Please try signing in again.' })
-          return
-        }
-
-        const session = data.session
-
         if (!session) {
-          onNavigate('/login')
+          if (!isBlockingInvalidSession) {
+            onNavigate('/login')
+          }
           return
         }
 
@@ -46,6 +41,7 @@ export default function ProtectedRoute({ children, onNavigate }: ProtectedRouteP
         const userEmail = session.user.email?.trim().toLowerCase()
 
         if (!adminEmail) {
+          isBlockingInvalidSession = true
           await supabase.auth.signOut()
 
           if (isCurrent) {
@@ -56,6 +52,7 @@ export default function ProtectedRoute({ children, onNavigate }: ProtectedRouteP
         }
 
         if (userEmail !== adminEmail) {
+          isBlockingInvalidSession = true
           await supabase.auth.signOut()
 
           if (isCurrent) {
@@ -73,10 +70,35 @@ export default function ProtectedRoute({ children, onNavigate }: ProtectedRouteP
       }
     }
 
+    async function checkSession() {
+      try {
+        const { data, error } = await supabase.auth.getSession()
+
+        if (!isCurrent) {
+          return
+        }
+
+        if (error) {
+          setAccessState({ status: 'blocked', message: 'We could not check your session. Please try signing in again.' })
+          return
+        }
+
+        await authorizeSession(data.session)
+      } catch {
+        if (isCurrent) {
+          setAccessState({ status: 'blocked', message: 'Connection problem while checking your session. Please try again.' })
+        }
+      }
+    }
+
     checkSession()
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      void authorizeSession(session)
+    })
 
     return () => {
       isCurrent = false
+      authListener.subscription.unsubscribe()
     }
   }, [onNavigate])
 
@@ -98,7 +120,7 @@ export default function ProtectedRoute({ children, onNavigate }: ProtectedRouteP
           <button
             type="button"
             onClick={() => onNavigate('/login')}
-            className="mt-6 rounded-full bg-zinc-100 px-5 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-white"
+            className="mt-6 min-h-11 rounded-full bg-zinc-100 px-5 py-2 text-sm font-semibold text-zinc-950 transition hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e]"
           >
             Back to login
           </button>

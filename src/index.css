@@ -3,10 +3,26 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   *,
   *::before,
   *::after {
     box-sizing: border-box;
+  }
+
+  main[id],
+  section[id] {
+    scroll-margin-top: 10rem;
+  }
+
+  @media (min-width: 768px) {
+    main[id],
+    section[id] {
+      scroll-margin-top: 7rem;
+    }
   }
 
   body {
@@ -14,5 +30,39 @@
     min-height: 100vh;
     font-family: 'Poppins', 'Segoe UI', sans-serif;
     background: #0a0f18;
+  }
+}
+
+@layer components {
+  [data-scroll-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .scroll-reveal-ready [data-scroll-reveal]:not([data-scroll-reveal='visible']) {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  .scroll-reveal-ready [data-scroll-reveal] {
+    transition:
+      opacity 700ms ease,
+      transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--scroll-reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  [data-scroll-reveal='visible'] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-scroll-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+      will-change: auto;
+    }
   }
 }
