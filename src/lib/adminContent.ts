@@ -55,7 +55,7 @@ export function normalizeSkillInput(input: SkillInput): SkillInput {
   return {
     name: input.name.trim(),
     category: input.category.trim(),
-    level_label: input.level_label ? normalizeOptional(input.level_label) : null,
+    level_label: input.level_label ? normalizeOptional(input.level_label) : '',
     display_order: Number.isFinite(input.display_order) ? input.display_order : 0,
     is_published: input.is_published,
   }

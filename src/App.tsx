@@ -8,6 +8,7 @@ import ProjectsSection from './components/home/ProjectsSection'
 import SkillsSection from './components/home/SkillsSection'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import { getHomeData, type HomeData } from './lib/portfolioData'
+import useScrollReveal from './hooks/useScrollReveal'
 import Admin from './pages/Admin'
 import Login from './pages/Login'
 
@@ -58,6 +59,8 @@ function App() {
 function Home() {
   const [homeData, setHomeData] = useState<HomeDataStatus>({ state: 'loading' })
 
+  useScrollReveal(homeData.state === 'success')
+
   useEffect(() => {
     let isCurrent = true
 
@@ -83,7 +86,7 @@ function Home() {
   }, [])
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#0c0d0f] text-zinc-200">
+    <div className="relative min-h-screen overflow-x-hidden bg-[#0c0d0f] pt-40 text-zinc-200 sm:pt-44 md:pt-28">
       <div
         className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(1200px_680px_at_55%_-8%,rgba(245,245,245,0.05),transparent_68%),repeating-linear-gradient(90deg,rgba(255,255,255,0.018)_0px,rgba(255,255,255,0.018)_40px,transparent_40px,transparent_92px),linear-gradient(180deg,#0b0c0e_0%,#090a0c_100%)]"
         aria-hidden="true"

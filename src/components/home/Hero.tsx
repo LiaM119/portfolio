@@ -13,7 +13,7 @@ function Hero({ profile, skills }: HeroProps) {
   const resumeUrl = profile?.resume_url ?? '/cv-liam-romero.pdf'
 
   return (
-    <section className="px-1 pb-12 pt-12 text-center sm:px-2 sm:pb-16 sm:pt-16 md:pb-20 md:pt-20" aria-labelledby="hero-title">
+    <section data-scroll-reveal className="px-1 pb-12 pt-12 text-center sm:px-2 sm:pb-16 sm:pt-16 md:pb-20 md:pt-20" aria-labelledby="hero-title">
       <h1 id="hero-title" className="text-balance text-4xl font-semibold leading-tight text-zinc-100 sm:text-5xl md:text-6xl lg:text-7xl">
         {title}
         <span className="mt-2 block sm:mt-3">{name}</span>

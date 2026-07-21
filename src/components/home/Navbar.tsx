@@ -24,8 +24,8 @@ function Navbar({ profile }: NavbarProps) {
     .toUpperCase() || 'P'
 
   return (
-    <header className="mx-auto w-full max-w-6xl px-3 pt-3 sm:px-6 sm:pt-6 lg:px-8">
-      <div className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.025] px-3 py-3 backdrop-blur sm:px-4 md:flex-row md:items-center md:justify-between">
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-6 lg:px-8">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.025] px-3 py-3 backdrop-blur sm:px-4 md:flex-row md:items-center md:justify-between">
         <a href="#inicio" className="inline-flex min-h-11 min-w-0 items-center gap-3 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e]" aria-label="Ir al inicio">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/25 text-base font-semibold text-zinc-100 sm:h-10 sm:w-10 sm:text-lg">
             {initials}

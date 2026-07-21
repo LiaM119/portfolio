@@ -15,7 +15,7 @@ function ProjectsSection({ projects }: ProjectsSectionProps) {
   }
 
   return (
-    <section id="proyectos" className="py-8 text-center sm:py-10 lg:text-left" aria-labelledby="proyectos-title">
+    <section id="proyectos" data-scroll-reveal className="py-8 text-center sm:py-10 lg:text-left" aria-labelledby="proyectos-title">
       <p className="text-xs uppercase tracking-[0.16em] text-zinc-400 sm:text-sm">Proyectos</p>
       <h2 id="proyectos-title" className="mt-3 text-2xl font-semibold text-zinc-100 sm:text-3xl lg:text-4xl">
         Mis proyectos destacados
@@ -37,7 +37,7 @@ function ProjectsSection({ projects }: ProjectsSectionProps) {
       </div>
 
       <article className="mt-8 grid gap-8 md:gap-10 lg:mt-10 lg:grid-cols-[0.95fr_1.15fr] lg:items-center" aria-label={`Proyecto principal ${featuredProject.title}`}>
-        <div className="lg:pt-8">
+        <div data-scroll-reveal className="lg:pt-8">
           <p className="text-xs uppercase tracking-[0.16em] text-zinc-400 sm:text-sm">Fullstack</p>
           <h3 className="mt-3 text-2xl font-medium text-zinc-100 sm:text-3xl lg:text-4xl">{featuredProject.title}</h3>
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-zinc-300 sm:text-lg lg:mx-0 lg:text-xl">
@@ -59,7 +59,7 @@ function ProjectsSection({ projects }: ProjectsSectionProps) {
           </ul>
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-2 shadow-2xl shadow-black/45 sm:p-3">
+        <div data-scroll-reveal className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-2 shadow-2xl shadow-black/45 sm:p-3">
           <img src={featuredProject.image_url ?? heroImage} alt={`Vista previa del proyecto ${featuredProject.title}`} width="343" height="361" loading="lazy" decoding="async" className="aspect-[16/10] w-full rounded-xl object-contain" />
         </div>
       </article>
