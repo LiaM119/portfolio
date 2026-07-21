@@ -11,6 +11,7 @@ function Hero({ profile, skills }: HeroProps) {
   const name = profile ? profile.full_name : 'Content not published yet'
   const headline = profile ? profile.headline : 'Profile details will appear here when published.'
   const resumeUrl = profile?.resume_url ?? '/cv-liam-romero.pdf'
+  const isLocalResume = resumeUrl.startsWith('/')
 
   return (
     <section data-scroll-reveal className="px-1 pb-12 pt-12 text-center sm:px-2 sm:pb-16 sm:pt-16 md:pb-20 md:pt-20" aria-labelledby="hero-title">
@@ -43,8 +44,9 @@ function Hero({ profile, skills }: HeroProps) {
         )}
         <a
           href={resumeUrl}
-          target="_blank"
-          rel="noreferrer"
+          target={isLocalResume ? undefined : '_blank'}
+          rel={isLocalResume ? undefined : 'noreferrer'}
+          download={isLocalResume ? 'cv-liam-romero.pdf' : undefined}
           className="inline-flex min-h-11 w-full items-center justify-center rounded-full border border-white/20 bg-transparent px-5 py-2.5 text-sm font-medium text-zinc-100 transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0c0e] sm:min-w-36 sm:w-auto"
         >
           Descargar CV
